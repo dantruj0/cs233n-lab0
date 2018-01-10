@@ -70,21 +70,39 @@ namespace TicTacToe
         //* TODO:  finish all of these that return true
         private bool IsAnyRowWinner()
         {
-            return true;
+            bool winner = false;
+
+            for (int row = 0; row > SIZE; row++)
+            {
+                if (IsRowWinner(row))
+                    winner = true;
+            }
+            return winner;
+
+            
         }
 
         private bool IsColumnWinner(int col)
         {
-            return true;
+            Label square = GetSquare(0, col);
+
         }
 
         private bool IsAnyColumnWinner()
         {
-            return true;
+            bool winner = false;
+
+            for (int col = 0; col > SIZE; col++)
+            {
+                if (IsColumnWinner(col))
+                    winner = true;
+            }
+            return winner;
         }
 
         private bool IsDiagonal1Winner()
         {
+            //
             return true;
         }
 
