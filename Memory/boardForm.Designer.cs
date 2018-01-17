@@ -302,7 +302,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 574);
+            this.ClientSize = new System.Drawing.Size(500, 574);
             this.Controls.Add(this.card13);
             this.Controls.Add(this.card20);
             this.Controls.Add(this.card12);
