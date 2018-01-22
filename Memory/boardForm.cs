@@ -23,6 +23,11 @@ namespace Memory
         int firstCardNumber = NOT_PICKED_YET;
         int secondCardNumber = NOT_PICKED_YET;
         int matches = 0;
+
+        const int CARDS = 21;
+
+        //PLaying board locations
+        string[] chosenCards = new string[CARDS]; 
         #endregion
 
         #region Methods
@@ -68,9 +73,14 @@ namespace Memory
         // TODO:  students should write this one
         private bool IsMatch(int index1, int index2)
         {
-            return true;
-        }
+            if (GetCardValue(index1) == GetCardValue(index2) )
+                return true;
+            else
+                return false;
 
+        }
+      
+        
         // This method fills each picture box with a filename
         private void FillCardFilenames()
         {
@@ -82,6 +92,10 @@ namespace Memory
             {
                 for (int value = 0; value <= 4; value++)
                 {
+                    //LOOK AT THIS LATER
+
+
+                    //chosenCards[i] = values[value] + suits[suit];
                     SetCardFilename(i, "card" + values[value] + suits[suit] + ".jpg");
                     i++;
                 }
@@ -91,6 +105,33 @@ namespace Memory
         // TODO:  students should write this one
         private void ShuffleCards()
         {
+            Random rand = new Random();
+
+
+            for (int card = 1; card < CARDS;  card++)
+            {
+                
+                //choose a card beween 1 and 20 and assign to card2
+                int card2 = rand.Next(1, CARDS);
+                //Swap(ref SetCardFilename(card), ref chosenCards[card2]);
+                Swap(GetCard(card),GetCard(card2));
+
+            }
+            
+        }
+        private void Swap(PictureBox card1, PictureBox card2)
+        {
+            cardTemp.Tag = card1.Tag;
+            card1.Tag = card2.Tag;
+            card2.Tag = cardTemp.Tag;
+            /*
+             * PictureBox tempPB;
+             * tempPB = card1;
+             * tempPB.Tag = card1.Tag;
+             * card1.Tag = card2.Tag;
+             * card2.Tag = tempPB.Tag;
+             * WHY WOULDNT THIS WORK.  HAD TO CREATE ACTUAL PICTUREBOX AND MAKE IT INVISIBLE */
+
         }
 
         // This method loads (shows) an image in a picture box.  Assumes that filenames
@@ -112,55 +153,79 @@ namespace Memory
         // shows (loads) the backs of all of the cards
         private void LoadAllCardBacks()
         {
+            for (int card = 1; card <= 20; card++)
+            {
+                //PictureBox cardPic = GetCard(card);
+                LoadCardBack(card);
 
+                
+            }
         }
 
         // Hides a picture box
         private void HideCard(int i)
         {
-
+            GetCard(i).Visible = false;
         }
 
         private void HideAllCards()
         {
-
+            for(int card = 1; card < CARDS; card++)
+            {
+                HideCard(card);
+            }
         }
 
         // shows a picture box
         private void ShowCard(int i)
         {
-
+            
         }
 
         private void ShowAllCards()
         {
-
+            for (int card =1; card < CARDS; card++)
+            {
+                LoadCard(card);
+            }
         }
 
         // disables a picture box
         private void DisableCard(int i)
         {
-
+            GetCard(i).Enabled = false;
         }
 
         private void DisableAllCards()
         {
-
+            for (int card = 1; card < CARDS; card++)
+            {
+                DisableCard(card);
+            }
         }
 
         private void EnableCard(int i)
         {
-
+            GetCard(i).Enabled = true;
         }
 
         private void EnableAllCards()
         {
-
+            for (int card = 1; card < CARDS; card++)
+            {
+                EnableCard(card);
+            }
         }
     
         private void EnableAllVisibleCards()
         {
-
+            for (int card = 1; card < CARDS; card++)
+            {
+                if (GetCard(card).Visible == true)
+                {
+                    GetCard(card).Enabled = true;
+                }
+            }
         }
 
         #endregion
@@ -177,12 +242,35 @@ namespace Memory
              *      they're shuffled.  If you get all 2s, something is wrong.
             */
             
+            
+            FillCardFilenames();
+            ShuffleCards();
+      
+            LoadAllCardBacks();
+
         }
 
         private void card_Click(object sender, EventArgs e)
         {
             PictureBox card = (PictureBox)sender;
+            //MessageBox.Show(card.Tag.ToString());
             int cardNumber = int.Parse(card.Name.Substring(4));
+
+            if (firstCardNumber == NOT_PICKED_YET)
+            {
+                LoadCard(cardNumber);
+                DisableCard(cardNumber);
+                firstCardNumber = cardNumber;
+                
+            }
+            else
+            {
+                secondCardNumber = cardNumber;
+                LoadCard(cardNumber);
+                DisableAllCards();
+                flipTimer.Enabled = true;
+
+            }
 
             /* 
              * if the first card isn't picked yet
@@ -200,7 +288,35 @@ namespace Memory
 
         private void flipTimer_Tick(object sender, EventArgs e)
         {
-            /*
+            flipTimer.Enabled = false;
+            
+            if (IsMatch(firstCardNumber, secondCardNumber))
+            {
+                matches += 1;
+                HideCard(firstCardNumber);
+                HideCard(secondCardNumber);
+                firstCardNumber = NOT_PICKED_YET;
+                secondCardNumber = NOT_PICKED_YET;
+
+                if (matches == 10)
+                {
+                    MessageBox.Show("You have matched every card.  Real nice there pal");
+                }
+                else
+                {
+                    EnableAllVisibleCards();
+                }
+
+            }
+            else
+            {
+                LoadCardBack(firstCardNumber);
+                LoadCardBack(secondCardNumber);
+                firstCardNumber = NOT_PICKED_YET;
+                secondCardNumber = NOT_PICKED_YET;
+                EnableAllVisibleCards();
+            }
+             /*
              * stop the flip timer
              * if the first card and second card are a match
              *      increment the number of matches
@@ -223,5 +339,7 @@ namespace Memory
              */
         }
         #endregion
+
+
     }
 }

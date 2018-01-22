@@ -51,6 +51,7 @@
             this.card2 = new System.Windows.Forms.PictureBox();
             this.card1 = new System.Windows.Forms.PictureBox();
             this.flipTimer = new System.Windows.Forms.Timer(this.components);
+            this.cardTemp = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.card13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.card20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.card12)).BeginInit();
@@ -71,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.card3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.card2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.card1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cardTemp)).BeginInit();
             this.SuspendLayout();
             // 
             // card13
@@ -298,11 +300,22 @@
             this.flipTimer.Interval = 2000;
             this.flipTimer.Tick += new System.EventHandler(this.flipTimer_Tick);
             // 
+            // cardTemp
+            // 
+            this.cardTemp.Enabled = false;
+            this.cardTemp.Location = new System.Drawing.Point(489, 514);
+            this.cardTemp.Name = "cardTemp";
+            this.cardTemp.Size = new System.Drawing.Size(100, 50);
+            this.cardTemp.TabIndex = 69;
+            this.cardTemp.TabStop = false;
+            this.cardTemp.Visible = false;
+            // 
             // boardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 574);
+            this.Controls.Add(this.cardTemp);
             this.Controls.Add(this.card13);
             this.Controls.Add(this.card20);
             this.Controls.Add(this.card12);
@@ -346,6 +359,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.card3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.card2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.card1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cardTemp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,6 +387,7 @@
         private System.Windows.Forms.PictureBox card2;
         private System.Windows.Forms.PictureBox card1;
         private System.Windows.Forms.Timer flipTimer;
+        private System.Windows.Forms.PictureBox cardTemp;
     }
 }
 
