@@ -73,6 +73,8 @@ namespace TicTacToe
         }
 
         //* TODO:  finish all of these that return true
+
+        //check to see if any Row is a winner
         private bool IsAnyRowWinner()
         {
             //bool winner = false;
@@ -88,7 +90,7 @@ namespace TicTacToe
 
             
         }
-
+        //Check to see if a single Column is a winner
         private bool IsColumnWinner(int col)
         {
             Label square = GetSquare(0, col);
@@ -107,6 +109,7 @@ namespace TicTacToe
 
         }
 
+        //check to see if any column is a winner
         private bool IsAnyColumnWinner()
         {
             //bool winner = false;
@@ -120,6 +123,7 @@ namespace TicTacToe
             //return winner;
             return false;
         }
+
 
         private bool IsDiagonal1Winner()
         {
@@ -139,7 +143,7 @@ namespace TicTacToe
             return true;
 
         }
-
+        //check to see if bottom-left to upper-right diagonal is a winner
         private bool IsDiagonal2Winner()
         {
             Label square = GetSquare(0, (SIZE - 1));
@@ -153,6 +157,7 @@ namespace TicTacToe
             return true;
         }
 
+        //check to see if any diagnal is a winner
         private bool IsAnyDiagonalWinner()
         {
             if (IsDiagonal1Winner() == false)
@@ -162,6 +167,8 @@ namespace TicTacToe
             return true;
         }
 
+
+        //check to see if the board is full
         private bool IsFull()
         {
             for (int square = 1; square < 26; square++)
@@ -218,7 +225,7 @@ namespace TicTacToe
             return false;
         }
 
-        // I wrote this method to show you how to call IsWinner
+        // I wrote this method to show you how to call IsWinner and check for a Tie
         private bool IsTie()
         {
             int winningDimension, winningValue;
@@ -260,6 +267,8 @@ namespace TicTacToe
         }
 
         //* TODO:  finish these 2
+
+        //if winning row found, it will call this method to highlight
         private void HighlightRow(int row)
         {
             for (int col = 0; col < 5; col++)
@@ -270,6 +279,7 @@ namespace TicTacToe
             }
         }
 
+        //if a winner is found the diagonal from Upper-Left to bottom right will highlight
         private void HighlightDiagonal1()
         {
             for (int row = 0, col = 0; col < 5; row++, col++)
@@ -281,6 +291,8 @@ namespace TicTacToe
         }
 
         //* TODO:  finish this
+        
+        //Used to call individual highlight methods to highlight winning path
         private void HighlightWinner(string player, int winningDimension, int winningValue)
         {
             switch (winningDimension)
@@ -301,6 +313,7 @@ namespace TicTacToe
         }
 
         //* TODO:  finish these 2
+        //remove all data for all squares
         private void ResetSquares()
         {
             for (int square = 1; square < 26; square++)
@@ -314,7 +327,8 @@ namespace TicTacToe
             }
 
         }
-
+        //Create a random based on the usable fields use it to mimic a CPU turn
+        //Check for winners and if none found make it the User's turn
         private void MakeComputerMove()
         {
             int row, col;
@@ -375,6 +389,7 @@ namespace TicTacToe
         // You'll need this method to allow the user to start a new game
         private void EnableAllSquares()
         {
+            //use for loops to enable every square and column
             for (int row = 0; row < SIZE; row++)
             {
                 for (int col = 0; col < SIZE; col++)
@@ -393,6 +408,8 @@ namespace TicTacToe
             string user = "User ";
 
             Label clickedLabel = (Label)sender;
+
+            //mark the clicked square for user if it's empty
             if (clickedLabel.Text == EMPTY)
             {
                 int row, column;
@@ -401,33 +418,41 @@ namespace TicTacToe
                 clickedLabel.Text = USER_SYMBOL;
                 clickedLabel.Enabled = false;
 
+                //check for a winner after changing column for User
                 if (IsWinner(out winningDimension, out winningValue))
                 {
                     DisableAllSquares();
                     HighlightWinner(user, winningDimension, winningValue);
+                    DisableAllSquares();
 
                 }
+                //give a result of a tie
                 else if (IsTie())
                     resultLabel.Text = "It's a tie!";
                 else
+                    //make the CPU move
                     MakeComputerMove();
             }
 
         }
 
+
         private void newGameButton_Click(object sender, EventArgs e)
         {
-            ResetSquares();
+            ResetSquares();  //wipes data in all squares to default
+            resultLabel.Text = "";  //blank out result label
+            EnableAllSquares(); //Enables all squares
+
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close();  //close the form
         }
 
         private void TTTForm_Load(object sender, EventArgs e)
         {
-            EnableAllSquares();
+            EnableAllSquares();  //enables on squares on load
         }
     }
 }

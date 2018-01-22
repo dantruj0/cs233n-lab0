@@ -24,6 +24,7 @@ namespace Memory
         int secondCardNumber = NOT_PICKED_YET;
         int matches = 0;
 
+        //Total cards to call upon
         const int CARDS = 21;
 
         //PLaying board locations
@@ -71,6 +72,8 @@ namespace Memory
         }
 
         // TODO:  students should write this one
+
+        //This will check two picked cards for a match
         private bool IsMatch(int index1, int index2)
         {
             if (GetCardValue(index1) == GetCardValue(index2) )
@@ -103,6 +106,9 @@ namespace Memory
         }
 
         // TODO:  students should write this one
+        
+        //ShuffleCards and Swap are Used to shuffle the deck by 
+        //moving .Tag info from PictureBox to another randomly generated picturebox
         private void ShuffleCards()
         {
             Random rand = new Random();
@@ -168,6 +174,7 @@ namespace Memory
             GetCard(i).Visible = false;
         }
 
+        //hides all pictureboxes
         private void HideAllCards()
         {
             for(int card = 1; card < CARDS; card++)
@@ -176,12 +183,7 @@ namespace Memory
             }
         }
 
-        // shows a picture box
-        private void ShowCard(int i)
-        {
-            
-        }
-
+        //Shows all dealt cards
         private void ShowAllCards()
         {
             for (int card =1; card < CARDS; card++)
@@ -196,6 +198,7 @@ namespace Memory
             GetCard(i).Enabled = false;
         }
 
+        //Disable cards from being used 
         private void DisableAllCards()
         {
             for (int card = 1; card < CARDS; card++)
@@ -204,11 +207,13 @@ namespace Memory
             }
         }
 
+        //Enable a picturebox if a match is not found
         private void EnableCard(int i)
         {
             GetCard(i).Enabled = true;
         }
 
+        //Enable all picture boxes
         private void EnableAllCards()
         {
             for (int card = 1; card < CARDS; card++)
@@ -216,7 +221,9 @@ namespace Memory
                 EnableCard(card);
             }
         }
-    
+        
+
+        //Any card that is visible will Reenabled for picks
         private void EnableAllVisibleCards()
         {
             for (int card = 1; card < CARDS; card++)
